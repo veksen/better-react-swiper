@@ -58,15 +58,18 @@ class Swiper extends React.Component {
 
   render() {
     const { items, ...restProps } = this.props;
+    const hideArrows = items.length <= this.props.itemsWide;
     return (
       <SwiperWrapper>
-        <ArrowLeft
-          data-testid="prev"
-          faded={!this.canGoToPrevious()}
-          onClick={() => this.previous()}
-        >
-          ◀
-        </ArrowLeft>
+        {!hideArrows && (
+          <ArrowLeft
+            data-testid="prev"
+            faded={!this.canGoToPrevious()}
+            onClick={() => this.previous()}
+          >
+            ◀
+          </ArrowLeft>
+        )}
         <InnerWrapper>
           {items.length &&
             items.map((item, i) => (
@@ -80,13 +83,15 @@ class Swiper extends React.Component {
               </Item>
             ))}
         </InnerWrapper>
-        <ArrowRight
-          data-testid="next"
-          faded={!this.canGoToNext()}
-          onClick={() => this.next()}
-        >
-          ▶
-        </ArrowRight>
+        {!hideArrows && (
+          <ArrowRight
+            data-testid="next"
+            faded={!this.canGoToNext()}
+            onClick={() => this.next()}
+          >
+            ▶
+          </ArrowRight>
+        )}
       </SwiperWrapper>
     );
   }
