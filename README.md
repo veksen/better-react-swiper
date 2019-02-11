@@ -1,5 +1,12 @@
 ### Usage
 
+```sh
+# install with npm
+npm i better-react-swiper
+# install with yarn
+yarn add better-react-swiper
+```
+
 ```js
 // import from NPM
 import Swiper from "better-react-swiper";
