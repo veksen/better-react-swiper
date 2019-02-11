@@ -15,7 +15,7 @@
     "build": "webpack",
     "start": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "preversion": "npm build --production",
+    "preversion": "npm run build --production",
     "postversion": "git push --tags && npm publish"
   },
   "dependencies": {
