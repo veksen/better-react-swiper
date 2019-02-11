@@ -15,7 +15,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --watch",
-    "build": "webpack"
+    "build": "webpack",
+    "preversion": "npm build --production",
+    "postversion": "git push --tags && npm publish"
   },
   "author": {
     "name": "Jean-Philippe Sirois",
