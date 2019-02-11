@@ -11,36 +11,49 @@ import {
 class Swiper extends React.Component {
   static defaultProps = {
     items: [],
-    itemsWide: 3
+    itemsWide: 3,
+    infinity: false
   };
 
   state = {
     currentIndex: 0
   };
 
-  canGoToPrevious = () => this.state.currentIndex !== 0;
+  canGoToPrevious = () => {
+    const { currentIndex } = this.state;
+    const { infinity, items } = this.props;
+    return (infinity && items.length > 1) || currentIndex !== 0;
+  };
 
   canGoToNext = () => {
     const { currentIndex } = this.state;
-    const { items, itemsWide } = this.props;
+    const { items, itemsWide, infinity } = this.props;
 
-    return currentIndex < items.length - itemsWide;
+    return (
+      (infinity && items.length > 1) || currentIndex < items.length - itemsWide
+    );
   };
 
   previous = () => {
     const { currentIndex } = this.state;
+    const { items, itemsWide } = this.props;
 
-    if (this.canGoToPrevious()) {
-      this.setState({ currentIndex: currentIndex - 1 });
-    }
+    const steps = currentIndex === 0 ? itemsWide : 1;
+    const prev = (items.length + currentIndex - steps) % items.length;
+
+    this.setState({
+      currentIndex: this.canGoToPrevious() ? prev : currentIndex
+    });
   };
 
   next = () => {
     const { currentIndex } = this.state;
+    const { items, itemsWide } = this.props;
 
-    if (this.canGoToNext()) {
-      this.setState({ currentIndex: currentIndex + 1 });
-    }
+    const steps = items.length - currentIndex > itemsWide ? 1 : itemsWide;
+    const next = (items.length + currentIndex + steps) % items.length;
+
+    this.setState({ currentIndex: this.canGoToNext() ? next : currentIndex });
   };
 
   render() {
