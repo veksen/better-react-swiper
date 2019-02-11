@@ -1,7 +1,7 @@
 {
-  "name": "react-slider",
+  "name": "better-react-swiper",
   "version": "0.0.1",
-  "description": "Simple React Slider",
+  "description": "Lightweight and simple React swiper component",
   "main": "dist/index.js",
   "peerDependencies": {
     "react": "^16.8.1",
