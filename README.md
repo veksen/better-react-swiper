@@ -1,11 +1,11 @@
 ### Usage
 
-```
+```js
 // import from NPM
 import Swiper from "better-react-swiper";
 ```
 
-```
+```jsx
 // use within your component
 <div className="wrapper" style={{ margin: "60px" }}>
   <Swiper
