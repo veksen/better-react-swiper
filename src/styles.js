@@ -11,7 +11,8 @@ export const SwiperWrapper = styled.div`
 export const InnerWrapper = styled.div`
   display: flex;
   flex-wrap: nowrap;
-  margin: 0 -60px;
+  width: calc(100% - 120px);
+  margin: 0;
   padding: 0 60px;
   mask-image: -webkit-gradient(
     linear,
@@ -25,8 +26,8 @@ export const InnerWrapper = styled.div`
   overflow: hidden;
 
   @media screen and (max-width: 767px) {
-    margin: 0 -30px;
-    padding: 0 30px;
+    width: calc(100% - 80px);
+    padding: 0 40px;
   }
 `;
 
@@ -50,20 +51,20 @@ const arrowStyles = css`
 export const ArrowLeft = styled.button`
   ${arrowStyles};
   opacity: ${props => (props.faded ? 0.25 : 1)};
-  left: -50px;
+  left: 10px;
 
   @media screen and (max-width: 767px) {
-    left: -10px;
+    left: 5px;
   }
 `;
 
 export const ArrowRight = styled.button`
   ${arrowStyles};
   opacity: ${props => (props.faded ? 0.25 : 1)};
-  right: -50px;
+  right: 10px;
 
   @media screen and (max-width: 767px) {
-    right: -10px;
+    right: 5px;
   }
 `;
 
