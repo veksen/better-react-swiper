@@ -23,6 +23,11 @@ export const InnerWrapper = styled.div`
     color-stop(1, rgba(0, 0, 0, 0))
   );
   overflow: hidden;
+
+  @media screen and (max-width: 767px) {
+    margin: 0 -30px;
+    padding: 0 30px;
+  }
 `;
 
 const arrowStyles = css`
@@ -46,12 +51,20 @@ export const ArrowLeft = styled.button`
   ${arrowStyles};
   opacity: ${props => (props.faded ? 0.25 : 1)};
   left: -50px;
+
+  @media screen and (max-width: 767px) {
+    left: -10px;
+  }
 `;
 
 export const ArrowRight = styled.button`
   ${arrowStyles};
   opacity: ${props => (props.faded ? 0.25 : 1)};
   right: -50px;
+
+  @media screen and (max-width: 767px) {
+    right: -10px;
+  }
 `;
 
 export const Item = styled.div`
@@ -61,4 +74,10 @@ export const Item = styled.div`
   width: ${props => 100 / props.itemsWide}%;
   flex: 0 0 ${props => 100 / props.itemsWide}%;
   display: flex;
+
+  @media screen and (max-width: 767px) {
+    left: -${props => props.currentIndex * 100 - props.slideOffset}%;
+    width: 100%;
+    flex-basis: 100%;
+  }
 `;
