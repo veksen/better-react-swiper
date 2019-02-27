@@ -16,7 +16,7 @@
     "start": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "preversion": "npm run build --production",
-    "postversion": "git push --tags && npm publish"
+    "postversion": "git push && git push --tags"
   },
   "dependencies": {
     "react": "^16.8.1",
