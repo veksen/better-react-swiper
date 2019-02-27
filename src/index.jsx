@@ -64,8 +64,8 @@ class Swiper extends React.Component {
   };
 
   onPan = e => {
-    const itemWidth = this.state.width;
-    const draggedPercent = (e.deltaX * 2) / itemWidth;
+    const { width } = this.state;
+    const draggedPercent = (e.deltaX * 2) / width;
 
     this.setState({ slideOffset: draggedPercent * 100 });
 
@@ -91,7 +91,9 @@ class Swiper extends React.Component {
   };
 
   computeItemWidth = () => {
-    return this.state.width <= MEDIA_MAX_SM ? 1 : this.props.itemsWide;
+    const { width } = this.state;
+    const { itemsWide } = this.props;
+    return width <= MEDIA_MAX_SM ? 1 : itemsWide;
   };
 
   computeMedia = () => {
@@ -106,8 +108,9 @@ class Swiper extends React.Component {
   };
 
   render() {
-    const { items, ...restProps } = this.props;
-    const hideArrows = items.length <= this.props.itemsWide;
+    const { items, itemsWide, ...restProps } = this.props;
+    const { currentIndex, slideOffset } = this.state;
+    const hideArrows = items.length <= itemsWide;
     return (
       <ReactResizeDetector handleWidth onResize={this.onResize}>
         <SwiperWrapper>
@@ -131,12 +134,11 @@ class Swiper extends React.Component {
                 items.map((item, i) => (
                   <Item
                     key={i}
-                    itemsWide={this.props.itemsWide}
-                    currentIndex={this.state.currentIndex}
+                    itemsWide={itemsWide}
+                    currentIndex={currentIndex}
                     style={{
-                      left: `-${(this.state.currentIndex * 100) /
-                        this.computeItemWidth() -
-                        this.state.slideOffset}%`
+                      left: `-${(currentIndex * 100) / this.computeItemWidth() -
+                        slideOffset}%`
                     }}
                     media={this.computeMedia()}
                   >
