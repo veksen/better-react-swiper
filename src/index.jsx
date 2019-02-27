@@ -1,5 +1,6 @@
 import React from "react";
 import Hammer from "react-hammerjs";
+import ReactResizeDetector from "react-resize-detector";
 
 import {
   SwiperWrapper,
@@ -8,6 +9,9 @@ import {
   ArrowRight,
   Item
 } from "./styles";
+
+const MEDIA_MAX_XS = 576;
+const MEDIA_MAX_SM = 767;
 
 class Swiper extends React.Component {
   static defaultProps = {
@@ -18,7 +22,8 @@ class Swiper extends React.Component {
 
   state = {
     currentIndex: 0,
-    slideOffset: 0
+    slideOffset: 0,
+    width: null
   };
 
   canGoToPrevious = () => {
@@ -59,7 +64,7 @@ class Swiper extends React.Component {
   };
 
   onPan = e => {
-    const itemWidth = this.item.clientWidth;
+    const itemWidth = this.state.width;
     const draggedPercent = (e.deltaX * 2) / itemWidth;
 
     this.setState({ slideOffset: draggedPercent * 100 });
@@ -81,54 +86,77 @@ class Swiper extends React.Component {
     this.setState({ slideOffset: 0 });
   };
 
+  onResize = width => {
+    this.setState({ width });
+  };
+
+  computeItemWidth = () => {
+    return this.state.width <= MEDIA_MAX_SM ? 1 : this.props.itemsWide;
+  };
+
+  computeMedia = () => {
+    const { width } = this.state;
+    if (width <= MEDIA_MAX_XS) {
+      return "xs";
+    }
+    if (width <= MEDIA_MAX_SM) {
+      return "sm";
+    }
+    return "md";
+  };
+
   render() {
     const { items, ...restProps } = this.props;
     const hideArrows = items.length <= this.props.itemsWide;
     return (
-      <SwiperWrapper>
-        {!hideArrows && (
-          <ArrowLeft
-            data-testid="prev"
-            faded={!this.canGoToPrevious()}
-            onClick={() => this.previous()}
+      <ReactResizeDetector handleWidth onResize={this.onResize}>
+        <SwiperWrapper>
+          {!hideArrows && (
+            <ArrowLeft
+              data-testid="prev"
+              faded={!this.canGoToPrevious()}
+              onClick={() => this.previous()}
+              media={this.computeMedia()}
+            >
+              ◀
+            </ArrowLeft>
+          )}
+          <Hammer
+            onPan={this.onPan}
+            onPanEnd={this.onPanEnd}
+            ref={instance => (this.hammerComponent = instance)}
           >
-            ◀
-          </ArrowLeft>
-        )}
-        <Hammer
-          onPan={this.onPan}
-          onPanEnd={this.onPanEnd}
-          ref={instance => (this.hammerComponent = instance)}
-        >
-          <InnerWrapper>
-            {items.length &&
-              items.map((item, i) => (
-                <Item
-                  key={i}
-                  itemsWide={this.props.itemsWide}
-                  currentIndex={this.state.currentIndex}
-                  style={{
-                    left: `-${(this.state.currentIndex * 100) /
-                      this.props.itemsWide -
-                      this.state.slideOffset}%`
-                  }}
-                  ref={el => (this.item = el)}
-                >
-                  {item}
-                </Item>
-              ))}
-          </InnerWrapper>
-        </Hammer>
-        {!hideArrows && (
-          <ArrowRight
-            data-testid="next"
-            faded={!this.canGoToNext()}
-            onClick={() => this.next()}
-          >
-            ▶
-          </ArrowRight>
-        )}
-      </SwiperWrapper>
+            <InnerWrapper media={this.computeMedia()}>
+              {items.length &&
+                items.map((item, i) => (
+                  <Item
+                    key={i}
+                    itemsWide={this.props.itemsWide}
+                    currentIndex={this.state.currentIndex}
+                    style={{
+                      left: `-${(this.state.currentIndex * 100) /
+                        this.computeItemWidth() -
+                        this.state.slideOffset}%`
+                    }}
+                    media={this.computeMedia()}
+                  >
+                    {item}
+                  </Item>
+                ))}
+            </InnerWrapper>
+          </Hammer>
+          {!hideArrows && (
+            <ArrowRight
+              data-testid="next"
+              faded={!this.canGoToNext()}
+              onClick={() => this.next()}
+              media={this.computeMedia()}
+            >
+              ▶
+            </ArrowRight>
+          )}
+        </SwiperWrapper>
+      </ReactResizeDetector>
     );
   }
 }

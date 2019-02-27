@@ -26,10 +26,13 @@ export const InnerWrapper = styled.div`
   );
   overflow: hidden;
 
-  @media screen and (max-width: 767px) {
-    width: calc(100% - 80px);
-    padding: 0 40px;
-  }
+  ${({ media }) =>
+    media === "xs" || media === "sm"
+      ? css`
+          width: calc(100% - 80px);
+          padding: 0 40px;
+        `
+      : null}
 `;
 
 const arrowStyles = css`
@@ -55,9 +58,12 @@ export const ArrowLeft = styled.button`
   opacity: ${props => (props.faded ? 0.25 : 1)};
   left: 10px;
 
-  @media screen and (max-width: 767px) {
-    left: 5px;
-  }
+  ${({ media }) =>
+    media === "xs" || media === "sm"
+      ? css`
+          left: 5px;
+        `
+      : null}
 `;
 
 export const ArrowRight = styled.button`
@@ -65,9 +71,12 @@ export const ArrowRight = styled.button`
   opacity: ${props => (props.faded ? 0.25 : 1)};
   right: 10px;
 
-  @media screen and (max-width: 767px) {
-    right: 5px;
-  }
+  ${({ media }) =>
+    media === "xs" || media === "sm"
+      ? css`
+          right: 5px;
+        `
+      : null}
 `;
 
 export const Item = styled.div`
@@ -78,9 +87,12 @@ export const Item = styled.div`
   flex: 0 0 ${props => 100 / props.itemsWide}%;
   display: flex;
 
-  @media screen and (max-width: 767px) {
-    left: -${props => props.currentIndex * 100 - props.slideOffset}%;
-    width: 100%;
-    flex-basis: 100%;
-  }
+  ${({ media }) =>
+    media === "xs" || media === "sm"
+      ? css`
+          left: -${props => props.currentIndex * 100 - props.slideOffset}%;
+          width: 100%;
+          flex-basis: 100%;
+        `
+      : null}
 `;
