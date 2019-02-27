@@ -4,7 +4,7 @@ import ReactResizeDetector from "react-resize-detector";
 
 import {
   SwiperWrapper,
-  InnerWrapper,
+  SwiperCanvas,
   ArrowLeft,
   ArrowRight,
   Item
@@ -108,7 +108,13 @@ class Swiper extends React.Component {
   };
 
   render() {
-    const { items, itemsWide, ...restProps } = this.props;
+    const {
+      items,
+      itemsWide,
+      canvasClassName,
+      canvasStyle,
+      ...restProps
+    } = this.props;
     const { currentIndex, slideOffset } = this.state;
     const hideArrows = items.length <= itemsWide;
     return (
@@ -129,7 +135,11 @@ class Swiper extends React.Component {
             onPanEnd={this.onPanEnd}
             ref={instance => (this.hammerComponent = instance)}
           >
-            <InnerWrapper media={this.computeMedia()}>
+            <SwiperCanvas
+              className={canvasClassName}
+              style={canvasStyle}
+              media={this.computeMedia()}
+            >
               {items.length &&
                 items.map((item, i) => (
                   <Item
@@ -145,7 +155,7 @@ class Swiper extends React.Component {
                     {item}
                   </Item>
                 ))}
-            </InnerWrapper>
+            </SwiperCanvas>
           </Hammer>
           {!hideArrows && (
             <ArrowRight

@@ -8,7 +8,7 @@ export const SwiperWrapper = styled.div`
   position: relative;
 `;
 
-export const InnerWrapper = styled.div`
+export const SwiperCanvas = styled.div`
   box-sizing: content-box;
   display: flex;
   flex-wrap: nowrap;
