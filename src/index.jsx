@@ -113,7 +113,7 @@ class Swiper extends React.Component {
     const hideArrows = items.length <= itemsWide;
     return (
       <ReactResizeDetector handleWidth onResize={this.onResize}>
-        <SwiperWrapper>
+        <SwiperWrapper {...restProps}>
           {!hideArrows && (
             <ArrowLeft
               data-testid="prev"
