@@ -9,7 +9,7 @@ export const SwiperWrapper = styled.div`
 `;
 
 export const InnerWrapper = styled.div`
-  box-sizing: border-box;
+  box-sizing: content-box;
   display: flex;
   flex-wrap: nowrap;
   width: calc(100% - 120px);
@@ -33,7 +33,7 @@ export const InnerWrapper = styled.div`
 `;
 
 const arrowStyles = css`
-  box-sizing: border-box;
+  box-sizing: content-box;
   cursor: pointer;
   background: #fff;
   border: 0;
