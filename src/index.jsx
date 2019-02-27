@@ -154,6 +154,7 @@ class Swiper extends React.Component {
                     key={i}
                     itemsWide={itemsWide}
                     currentIndex={currentIndex}
+                    data-testid="item"
                     style={{
                       left: `-${(currentIndex * 100) / this.computeItemWidth() -
                         slideOffset}%`
