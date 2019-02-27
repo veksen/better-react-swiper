@@ -117,6 +117,8 @@ class Swiper extends React.Component {
       itemsWide,
       canvasClassName,
       canvasStyle,
+      arrowClassName,
+      arrowStyle,
       ...restProps
     } = this.props;
     const { currentIndex, slideOffset } = this.state;
@@ -129,6 +131,8 @@ class Swiper extends React.Component {
               data-testid="prev"
               faded={!this.canGoToPrevious()}
               onClick={() => this.previous()}
+              className={arrowClassName}
+              style={arrowStyle}
               media={this.computeMedia()}
             >
               ◀
@@ -166,6 +170,8 @@ class Swiper extends React.Component {
               data-testid="next"
               faded={!this.canGoToNext()}
               onClick={() => this.next()}
+              className={arrowClassName}
+              style={arrowStyle}
               media={this.computeMedia()}
             >
               ▶
