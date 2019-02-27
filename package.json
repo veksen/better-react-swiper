@@ -15,6 +15,7 @@
     "build": "webpack",
     "start": "webpack --watch",
     "test": "jest",
+    "test:check-coverage": "npm run test && codecov",
     "preversion": "npm run build --production",
     "postversion": "git push && git push --tags"
   },
@@ -47,5 +48,13 @@
   "peerDependencies": {
     "react": "^16.8.1",
     "react-dom": "^16.8.1"
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!**/node_modules/**"
+    ],
+    "collectCoverage": true
   }
 }
