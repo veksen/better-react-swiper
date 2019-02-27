@@ -1,4 +1,5 @@
 import React from "react";
+import Hammer from "react-hammerjs";
 
 import {
   SwiperWrapper,
@@ -16,7 +17,8 @@ class Swiper extends React.Component {
   };
 
   state = {
-    currentIndex: 0
+    currentIndex: 0,
+    slideOffset: 0
   };
 
   canGoToPrevious = () => {
@@ -56,6 +58,29 @@ class Swiper extends React.Component {
     this.setState({ currentIndex: this.canGoToNext() ? next : currentIndex });
   };
 
+  onPan = e => {
+    const itemWidth = this.item.clientWidth;
+    const draggedPercent = (e.deltaX * 2) / itemWidth;
+
+    this.setState({ slideOffset: draggedPercent * 100 });
+
+    if (draggedPercent < -0.3333) {
+      this.hammerComponent.hammer.stop();
+      this.setState({ slideOffset: 0 });
+      this.next();
+    }
+
+    if (draggedPercent > 0.3333) {
+      this.hammerComponent.hammer.stop();
+      this.setState({ slideOffset: 0 });
+      this.previous();
+    }
+  };
+
+  onPanEnd = () => {
+    this.setState({ slideOffset: 0 });
+  };
+
   render() {
     const { items, ...restProps } = this.props;
     const hideArrows = items.length <= this.props.itemsWide;
@@ -70,19 +95,30 @@ class Swiper extends React.Component {
             ◀
           </ArrowLeft>
         )}
-        <InnerWrapper>
-          {items.length &&
-            items.map((item, i) => (
-              <Item
-                key={i}
-                itemsWide={this.props.itemsWide}
-                currentIndex={this.state.currentIndex}
-                slideOffset="0"
-              >
-                {item}
-              </Item>
-            ))}
-        </InnerWrapper>
+        <Hammer
+          onPan={this.onPan}
+          onPanEnd={this.onPanEnd}
+          ref={instance => (this.hammerComponent = instance)}
+        >
+          <InnerWrapper>
+            {items.length &&
+              items.map((item, i) => (
+                <Item
+                  key={i}
+                  itemsWide={this.props.itemsWide}
+                  currentIndex={this.state.currentIndex}
+                  style={{
+                    left: `-${(this.state.currentIndex * 100) /
+                      this.props.itemsWide -
+                      this.state.slideOffset}%`
+                  }}
+                  ref={el => (this.item = el)}
+                >
+                  {item}
+                </Item>
+              ))}
+          </InnerWrapper>
+        </Hammer>
         {!hideArrows && (
           <ArrowRight
             data-testid="next"
