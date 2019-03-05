@@ -54,3 +54,7 @@ const items = [1,2,3,4,5].map(number => <Item>{number}</Item>)
   arrowStyle={{ background: "#f00" }}
 />
 ```
+
+### Responsiveness
+
+For the time being, the swiper reverts to 1 item wide at 767px. This size is calculated as an "element query", meaning, the size of the wrapper element, not the size of the window. The goal is to be configurable, in the near future.
