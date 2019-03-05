@@ -1,5 +1,9 @@
 import styled, { css } from "styled-components";
 
+const isMobile = media => {
+  return media === "xs" || media === "sm";
+};
+
 const color = {
   blue: "#105783"
 };
@@ -66,8 +70,8 @@ export const SwiperWrapper = styled.div`
   position: relative;
 
   ${SwiperCanvas} {
-    ${({ media }) =>
-      media === "xs" || media === "sm"
+    ${props =>
+      isMobile(props.media)
         ? css`
             width: calc(100% - 80px);
             padding: 0 40px;
@@ -76,8 +80,8 @@ export const SwiperWrapper = styled.div`
   }
 
   ${ArrowLeft} {
-    ${({ media }) =>
-      media === "xs" || media === "sm"
+    ${props =>
+      isMobile(props.media)
         ? css`
             left: 5px;
           `
@@ -85,8 +89,8 @@ export const SwiperWrapper = styled.div`
   }
 
   ${ArrowRight} {
-    ${({ media }) =>
-      media === "xs" || media === "sm"
+    ${props =>
+      isMobile(props.media)
         ? css`
             right: 5px;
           `
@@ -94,8 +98,8 @@ export const SwiperWrapper = styled.div`
   }
 
   ${Item} {
-    ${({ media }) =>
-      media === "xs" || media === "sm"
+    ${props =>
+      isMobile(props.media)
         ? css`
             left: -${props => props.currentIndex * 100 - props.slideOffset}%;
             width: 100%;
