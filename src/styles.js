@@ -4,10 +4,6 @@ const color = {
   blue: "#105783"
 };
 
-export const SwiperWrapper = styled.div`
-  position: relative;
-`;
-
 export const SwiperCanvas = styled.div`
   box-sizing: content-box;
   display: flex;
@@ -25,14 +21,6 @@ export const SwiperCanvas = styled.div`
     color-stop(1, rgba(0, 0, 0, 0))
   );
   overflow: hidden;
-
-  ${({ media }) =>
-    media === "xs" || media === "sm"
-      ? css`
-          width: calc(100% - 80px);
-          padding: 0 40px;
-        `
-      : null}
 `;
 
 const arrowStyles = css`
@@ -57,26 +45,12 @@ export const ArrowLeft = styled.button`
   ${arrowStyles};
   opacity: ${props => (props.faded ? 0.25 : 1)};
   left: 10px;
-
-  ${({ media }) =>
-    media === "xs" || media === "sm"
-      ? css`
-          left: 5px;
-        `
-      : null}
 `;
 
 export const ArrowRight = styled.button`
   ${arrowStyles};
   opacity: ${props => (props.faded ? 0.25 : 1)};
   right: 10px;
-
-  ${({ media }) =>
-    media === "xs" || media === "sm"
-      ? css`
-          right: 5px;
-        `
-      : null}
 `;
 
 export const Item = styled.div`
@@ -86,13 +60,47 @@ export const Item = styled.div`
   width: ${props => 100 / props.itemsWide}%;
   flex: 0 0 ${props => 100 / props.itemsWide}%;
   display: flex;
+`;
 
-  ${({ media }) =>
-    media === "xs" || media === "sm"
-      ? css`
-          left: -${props => props.currentIndex * 100 - props.slideOffset}%;
-          width: 100%;
-          flex-basis: 100%;
-        `
-      : null}
+export const SwiperWrapper = styled.div`
+  position: relative;
+
+  ${SwiperCanvas} {
+    ${({ media }) =>
+      media === "xs" || media === "sm"
+        ? css`
+            width: calc(100% - 80px);
+            padding: 0 40px;
+          `
+        : null}
+  }
+
+  ${ArrowLeft} {
+    ${({ media }) =>
+      media === "xs" || media === "sm"
+        ? css`
+            left: 5px;
+          `
+        : null}
+  }
+
+  ${ArrowRight} {
+    ${({ media }) =>
+      media === "xs" || media === "sm"
+        ? css`
+            right: 5px;
+          `
+        : null}
+  }
+
+  ${Item} {
+    ${({ media }) =>
+      media === "xs" || media === "sm"
+        ? css`
+            left: -${props => props.currentIndex * 100 - props.slideOffset}%;
+            width: 100%;
+            flex-basis: 100%;
+          `
+        : null}
+  }
 `;

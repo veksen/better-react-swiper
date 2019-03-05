@@ -125,7 +125,7 @@ class Swiper extends React.Component {
     const hideArrows = items.length <= itemsWide;
     return (
       <ReactResizeDetector handleWidth onResize={this.onResize}>
-        <SwiperWrapper {...restProps}>
+        <SwiperWrapper {...restProps} media={this.computeMedia()}>
           {!hideArrows && (
             <ArrowLeft
               data-testid="prev"
@@ -133,7 +133,6 @@ class Swiper extends React.Component {
               onClick={() => this.previous()}
               className={arrowClassName}
               style={arrowStyle}
-              media={this.computeMedia()}
             >
               ◀
             </ArrowLeft>
@@ -146,7 +145,6 @@ class Swiper extends React.Component {
             <SwiperCanvas
               className={canvasClassName}
               style={canvasStyle}
-              media={this.computeMedia()}
             >
               {items.length &&
                 items.map((item, i) => (
@@ -159,7 +157,6 @@ class Swiper extends React.Component {
                       left: `-${(currentIndex * 100) / this.computeItemWidth() -
                         slideOffset}%`
                     }}
-                    media={this.computeMedia()}
                   >
                     {item}
                   </Item>
@@ -173,7 +170,6 @@ class Swiper extends React.Component {
               onClick={() => this.next()}
               className={arrowClassName}
               style={arrowStyle}
-              media={this.computeMedia()}
             >
               ▶
             </ArrowRight>
