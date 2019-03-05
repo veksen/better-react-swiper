@@ -29,3 +29,28 @@ import Swiper from "better-react-swiper";
 ### Demo
 
 https://codesandbox.io/s/4qp9106zx0
+
+### Options
+
+`Swiper` takes props:
+
+- `items: Array<any>`: array of items to be used in the slider - defaults to `[]`
+- `itemsWide: number`: number of items to be shown on desktop - defaults to `3`
+- `infinity: boolean`: if the slider jumps back to the beginning once it reaches the end - defaults to `false`
+- `canvasStyle?: React.CSSProperties`: styles to be applied to the wrapper around items
+- `canvasClassName?: string`: string to be applied to the wrapper around items
+- `arrowStyle?: React.CSSProperties`: styles to be applied to the arrows
+- `arrowClassName?: string`: string to be applied to the arrows
+
+```jsx
+// example
+const Item = ({children}) => <div style={{ margin: '0 10px' }}>{children}</div>
+const items = [1,2,3,4,5].map(number => <Item>{number}</Item>)
+
+<Swiper
+  items={items}
+  itemsWide={4}
+  infinity
+  arrowStyle={{ background: "#f00" }}
+/>
+```
