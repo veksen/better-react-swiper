@@ -1,0 +1,290 @@
+(function(global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined'
+    ? factory(
+        exports,
+        require('react'),
+        require('react-resize-detector'),
+        require('react-swipeable'),
+        require('styled-components')
+      )
+    : typeof define === 'function' && define.amd
+    ? define([
+        'exports',
+        'react',
+        'react-resize-detector',
+        'react-swipeable',
+        'styled-components',
+      ], factory)
+    : ((global = global || self),
+      factory(
+        (global['better-react-swiper'] = {}),
+        global.React,
+        global.ReactResizeDetector,
+        global.reactSwipeable,
+        global.styled
+      ));
+})(this, function(exports, React, ReactResizeDetector, reactSwipeable, styled) {
+  'use strict';
+
+  var React__default = 'default' in React ? React['default'] : React;
+  ReactResizeDetector =
+    ReactResizeDetector && ReactResizeDetector.hasOwnProperty('default')
+      ? ReactResizeDetector['default']
+      : ReactResizeDetector;
+  var styled__default = 'default' in styled ? styled['default'] : styled;
+
+  const isMobile = media => {
+    return media === 'xs' || media === 'sm';
+  };
+  const color = {
+    blue: '#105783',
+  };
+  const SwiperCanvas = styled__default.div`
+  box-sizing: content-box;
+  display: flex;
+  flex-wrap: nowrap;
+  width: calc(100% - 120px);
+  margin: 0;
+  padding: 0 60px;
+  mask-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    color-stop(0, rgba(0, 0, 0, 0)),
+    color-stop(0.05, rgba(0, 0, 0, 1)),
+    color-stop(0.95, rgba(0, 0, 0, 1)),
+    color-stop(1, rgba(0, 0, 0, 0))
+  );
+  overflow: hidden;
+`;
+  const arrowStyles = styled.css`
+    box-sizing: content-box;
+    cursor: pointer;
+    background: #fff;
+    border: 0;
+    color: ${color.blue};
+    border-radius: 4px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+    font-size: 12px;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    margin-top: -15px;
+    z-index: 1;
+    transition: 0.3s opacity;
+  `;
+  const ArrowLeft = styled__default.button`
+  ${arrowStyles};
+  opacity: ${props => (props.faded ? 0.25 : 1)};
+  left: 10px;
+`;
+  const ArrowRight = styled__default.button`
+  ${arrowStyles};
+  opacity: ${props => (props.faded ? 0.25 : 1)};
+  right: 10px;
+`;
+  const Item = styled__default.div`
+  transition: 0.3s left;
+  position: relative;
+  width: ${props => 100 / props.itemsWide}%;
+  flex: 0 0 ${props => 100 / props.itemsWide}%;
+  display: flex;
+`;
+  const SwiperWrapper = styled__default.div`
+  position: relative;
+
+  ${SwiperCanvas} {
+    ${props =>
+      isMobile(props.media)
+        ? styled.css`
+            width: calc(100% - 80px);
+            padding: 0 40px;
+          `
+        : null}
+  }
+
+  ${ArrowLeft} {
+    ${props =>
+      isMobile(props.media)
+        ? styled.css`
+            left: 5px;
+          `
+        : null}
+  }
+
+  ${ArrowRight} {
+    ${props =>
+      isMobile(props.media)
+        ? styled.css`
+            right: 5px;
+          `
+        : null}
+  }
+
+  ${Item} {
+    ${props =>
+      isMobile(props.media)
+        ? styled.css`
+            width: 100%;
+            flex-basis: 100%;
+          `
+        : null}
+  }
+`;
+
+  const MEDIA_MAX_XS = 576;
+  const MEDIA_MAX_SM = 767;
+  const Swiper = ({
+    items = [],
+    itemsWide = 3,
+    infinity = false,
+    canvasClassName,
+    canvasStyle,
+    arrowClassName,
+    arrowStyle,
+    style,
+  }) => {
+    const [currentIndex, setCurrentIndex] = React.useState(0);
+    const [slideOffset, setSlideOffset] = React.useState(0);
+    // TODO: there has to be a better way...
+    const [lastSwipe, setLastSwipe] = React.useState(null);
+    const [width, setWidth] = React.useState(0);
+    const computeMedia = () => {
+      if (width <= MEDIA_MAX_XS) {
+        return 'xs';
+      }
+      if (width <= MEDIA_MAX_SM) {
+        return 'sm';
+      }
+      return 'md';
+    };
+    const computeItemWidth = () => {
+      return width <= MEDIA_MAX_SM ? 1 : itemsWide;
+    };
+    const canGoToPrevious = () => {
+      return (infinity && items.length > 1) || currentIndex !== 0;
+    };
+    const canGoToNext = () => {
+      const computedWide = computeItemWidth();
+      return (
+        (infinity && items.length > 1) ||
+        currentIndex < items.length - computedWide
+      );
+    };
+    const previous = () => {
+      const computedWide = computeItemWidth();
+      const steps = currentIndex === 0 ? computedWide : 1;
+      const prev = (items.length + currentIndex - steps) % items.length;
+      setCurrentIndex(canGoToPrevious() ? prev : currentIndex);
+    };
+    const next = () => {
+      const computedWide = computeItemWidth();
+      const steps =
+        items.length - currentIndex > computedWide ? 1 : computedWide;
+      const next = (items.length + currentIndex + steps) % items.length;
+      setCurrentIndex(canGoToNext() ? next : currentIndex);
+    };
+    const resetSwipe = () => {
+      const now = new Date().getTime();
+      setSlideOffset(0);
+      setLastSwipe(now);
+    };
+    const onSwiping = e => {
+      const now = new Date().getTime();
+      if (!width) {
+        return;
+      }
+      if (lastSwipe && now - lastSwipe < 250) {
+        return;
+      }
+      const draggedPercent = (e.deltaX * 2) / width;
+      setSlideOffset(draggedPercent * 100);
+      if (draggedPercent < -0.3333) {
+        resetSwipe();
+        next();
+      }
+      if (draggedPercent > 0.3333) {
+        resetSwipe();
+        previous();
+      }
+    };
+    const onSwipeEnd = () => {
+      setSlideOffset(0);
+    };
+    const onResize = width => {
+      setWidth(width);
+    };
+    const swipeConfig = {
+      trackTouch: true,
+      trackMouse: true,
+    };
+    // const hideArrows = false;
+    // const hideArrows = items.length <= itemsWide;
+    console.log('v2');
+    return React__default.createElement(
+      ReactResizeDetector,
+      { handleWidth: true, onResize: onResize },
+      React__default.createElement(
+        SwiperWrapper,
+        { style: style, media: computeMedia() },
+        React__default.createElement(
+          ArrowLeft,
+          {
+            'data-testid': 'prev',
+            faded: !canGoToPrevious(),
+            onClick: previous,
+            className: arrowClassName,
+            style: arrowStyle,
+          },
+          '\u25C0abc'
+        ),
+        React__default.createElement(
+          reactSwipeable.Swipeable,
+          Object.assign(
+            {
+              onSwiping: eventData => onSwiping(eventData),
+              onSwiped: onSwipeEnd,
+            },
+            swipeConfig
+          ),
+          'defs',
+          React__default.createElement(
+            SwiperCanvas,
+            { className: canvasClassName, style: canvasStyle },
+            items.map((item, i) =>
+              React__default.createElement(
+                Item,
+                {
+                  key: i,
+                  itemsWide: computeItemWidth(),
+                  currentIndex: currentIndex,
+                  'data-testid': 'item',
+                  style: {
+                    left: `-${(currentIndex * 100) / computeItemWidth() -
+                      slideOffset}%`,
+                  },
+                },
+                item
+              )
+            )
+          )
+        ),
+        React__default.createElement(
+          ArrowRight,
+          {
+            'data-testid': 'next',
+            faded: !canGoToNext(),
+            onClick: next,
+            className: arrowClassName,
+            style: arrowStyle,
+          },
+          '\u25B6'
+        )
+      )
+    );
+  };
+
+  exports.default = Swiper;
+});
+//# sourceMappingURL=better-react-swiper.umd.development.js.map
