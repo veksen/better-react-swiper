@@ -57,6 +57,7 @@ https://codesandbox.io/s/mz0yp0ll5p
 - `canvasClassName?: string`: string to be applied to the wrapper around items
 - `arrowStyle?: React.CSSProperties`: styles to be applied to the arrows
 - `arrowClassName?: string`: string to be applied to the arrows
+- `style?: React.CSSProperties`
 
 ```jsx
 // example
