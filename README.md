@@ -1,3 +1,7 @@
+[![TravisCI](https://travis-ci.org/veksen/better-react-swiper.svg?branch=master)](https://travis-ci.org/veksen/better-react-swiper)
+[![codecov](https://codecov.io/gh/veksen/better-react-swiper/branch/master/graph/badge.svg)](https://codecov.io/gh/veksen/better-react-swiper)
+[![gzip size](http://img.badgesize.io/https://unpkg.com/better-react-swiper@latest/dist/better-react-swiper.umd.production.js?compression=gzip)](https://unpkg.com/better-react-swiper@latest/dist/better-react-swiper.umd.production.js)
+
 ### Usage
 
 ```sh
