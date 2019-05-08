@@ -21,7 +21,7 @@
     "build": "tsdx build",
     "start": "tsdx watch",
     "test": "tsdx test --env=jsdom",
-    "test:check-coverage": "yarn test && codecov",
+    "test:check-coverage": "yarn test --coverage && codecov",
     "preversion": "yarn build --production",
     "postversion": "git push && git push --tags"
   },
