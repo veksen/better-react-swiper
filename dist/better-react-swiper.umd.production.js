@@ -23,13 +23,13 @@
         e.reactSwipeable,
         e.styled
       ));
-})(this, function(e, t, a, i, s) {
+})(this, function(e, t, i, a, n) {
   'use strict';
-  var n = 'default' in t ? t.default : t;
-  a = a && a.hasOwnProperty('default') ? a.default : a;
-  var o = 'default' in s ? s.default : s;
-  const r = e => 'xs' === e || 'sm' === e,
-    l = o.div`
+  var s = 'default' in t ? t.default : t;
+  i = i && i.hasOwnProperty('default') ? i.default : i;
+  var r = 'default' in n ? n.default : n;
+  const o = e => 'xs' === e || 'sm' === e,
+    l = r.div`
   box-sizing: content-box;
   display: flex;
   flex-wrap: nowrap;
@@ -47,7 +47,7 @@
   );
   overflow: hidden;
 `,
-    d = s.css`
+    d = n.css`
   box-sizing: content-box;
   cursor: pointer;
   background: #fff;
@@ -64,30 +64,30 @@
   z-index: 1;
   transition: 0.3s opacity;
 `,
-    c = o.button`
+    c = r.button`
   ${d};
   opacity: ${e => (e.faded ? 0.25 : 1)};
   left: 10px;
 `,
-    p = o.button`
+    p = r.button`
   ${d};
   opacity: ${e => (e.faded ? 0.25 : 1)};
   right: 10px;
 `,
-    f = o.div`
+    f = r.div`
   transition: 0.3s left;
   position: relative;
   width: ${e => 100 / e.itemsWide}%;
   flex: 0 0 ${e => 100 / e.itemsWide}%;
   display: flex;
 `,
-    u = o.div`
+    u = r.div`
   position: relative;
 
   ${l} {
     ${e =>
-      r(e.media)
-        ? s.css`
+      o(e.media)
+        ? n.css`
             width: calc(100% - 80px);
             padding: 0 40px;
           `
@@ -96,8 +96,8 @@
 
   ${c} {
     ${e =>
-      r(e.media)
-        ? s.css`
+      o(e.media)
+        ? n.css`
             left: 5px;
           `
         : null}
@@ -105,8 +105,8 @@
 
   ${p} {
     ${e =>
-      r(e.media)
-        ? s.css`
+      o(e.media)
+        ? n.css`
             right: 5px;
           `
         : null}
@@ -114,79 +114,81 @@
 
   ${f} {
     ${e =>
-      r(e.media)
-        ? s.css`
+      o(e.media)
+        ? n.css`
             width: 100%;
             flex-basis: 100%;
           `
         : null}
   }
-`;
-  e.default = ({
-    items: e = [],
-    itemsWide: s = 3,
-    infinity: o = !1,
-    canvasClassName: r,
-    canvasStyle: d,
-    arrowClassName: m,
-    arrowStyle: x,
-    style: g,
-  }) => {
-    const [b, h] = t.useState(0),
-      [w, y] = t.useState(0),
-      [$, v] = t.useState(null),
-      [S, k] = t.useState(0),
-      z = () => (S <= 767 ? 1 : s),
-      E = () => (o && e.length > 1) || 0 !== b,
-      N = () => {
-        const t = z();
-        return (o && e.length > 1) || b < e.length - t;
-      },
-      W = () => {
-        const t = z(),
-          a = 0 === b ? t : 1,
-          i = (e.length + b - a) % e.length;
-        h(E() ? i : b);
-      },
-      q = () => {
-        const t = z(),
-          a = e.length - b > t ? 1 : t,
-          i = (e.length + b + a) % e.length;
-        h(N() ? i : b);
-      },
-      C = () => {
-        const e = new Date().getTime();
-        y(0), v(e);
-      };
-    return (
-      console.log('v2'),
-      n.createElement(
-        a,
+`,
+    m = ({
+      items: e = [],
+      itemsWide: n = 3,
+      infinity: r = !1,
+      canvasClassName: o,
+      canvasStyle: d,
+      arrowClassName: m,
+      arrowStyle: x,
+      style: g,
+    }) => {
+      const [h, b] = t.useState(0),
+        [w, y] = t.useState(0),
+        [$, v] = t.useState(null),
+        [S, k] = t.useState(0),
+        z = () => (S <= 767 ? 1 : n),
+        E = () => (r && e.length > 1) || 0 !== h,
+        N = () => {
+          const t = z();
+          return (r && e.length > 1) || h < e.length - t;
+        },
+        W = () => {
+          if (!E()) return;
+          const t = z(),
+            i = 0 === h ? t : 1,
+            a = (e.length + h - i) % e.length;
+          b(a);
+        },
+        q = () => {
+          if (!N()) return;
+          const t = z(),
+            i = e.length - h > t ? 1 : t,
+            a = (e.length + h + i) % e.length;
+          b(a);
+        },
+        C = () => {
+          const e = new Date().getTime();
+          y(0), v(e);
+        },
+        R = e.length <= n;
+      return s.createElement(
+        i,
         {
           handleWidth: !0,
           onResize: e => {
-            k(e);
+            k(e), C();
           },
         },
-        n.createElement(
+        s.createElement(
           u,
           {
             style: g,
             media: (() => (S <= 576 ? 'xs' : S <= 767 ? 'sm' : 'md'))(),
           },
-          n.createElement(
-            c,
-            {
-              'data-testid': 'prev',
-              faded: !E(),
-              onClick: W,
-              className: m,
-              style: x,
-            },
-            '◀abc'
-          ),
-          n.createElement(
-            i.Swipeable,
+          !R &&
+            s.createElement(
+              c,
+              {
+                'data-testid': 'prev',
+                faded: !E(),
+                onClick: W,
+                className: m,
+                style: x,
+              },
+              '◀'
+            ),
+          s.createElement(
+            a.Swipeable,
             Object.assign(
               {
                 onSwiping: e =>
@@ -194,10 +196,15 @@
                     const t = new Date().getTime();
                     if (!S) return;
                     if ($ && t - $ < 250) return;
-                    const a = (2 * e.deltaX) / S;
-                    y(100 * a),
-                      a < -0.3333 && (C(), q()),
-                      a > 0.3333 && (C(), W());
+                    const i = (2 * e.deltaX) / S;
+                    return (
+                      y(100 * i),
+                      i < -0.3333
+                        ? (C(), void W())
+                        : i > 0.3333
+                        ? (C(), void q())
+                        : void 0
+                    );
                   })(e),
                 onSwiped: () => {
                   y(0);
@@ -205,39 +212,39 @@
               },
               { trackTouch: !0, trackMouse: !0 }
             ),
-            'defs',
-            n.createElement(
+            s.createElement(
               l,
-              { className: r, style: d },
+              { className: o, style: d },
               e.map((e, t) =>
-                n.createElement(
+                s.createElement(
                   f,
                   {
                     key: t,
                     itemsWide: z(),
-                    currentIndex: b,
+                    currentIndex: h,
                     'data-testid': 'item',
-                    style: { left: `-${(100 * b) / z() - w}%` },
+                    style: { left: `-${(100 * h) / z() + w}%` },
                   },
                   e
                 )
               )
             )
           ),
-          n.createElement(
-            p,
-            {
-              'data-testid': 'next',
-              faded: !N(),
-              onClick: q,
-              className: m,
-              style: x,
-            },
-            '▶'
-          )
+          !R &&
+            s.createElement(
+              p,
+              {
+                'data-testid': 'next',
+                faded: !N(),
+                onClick: q,
+                className: m,
+                style: x,
+              },
+              '▶'
+            )
         )
-      )
-    );
-  };
+      );
+    };
+  (e.Swiper = m), (e.default = m);
 });
 //# sourceMappingURL=better-react-swiper.umd.production.js.map

@@ -24,7 +24,7 @@ interface SwiperProps {
   style?: React.CSSProperties;
 }
 
-const Swiper = ({
+export const Swiper = ({
   items = [],
   itemsWide = 3,
   infinity = false,
@@ -36,6 +36,7 @@ const Swiper = ({
 }: SwiperProps): JSX.Element => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [slideOffset, setSlideOffset] = useState<number>(0);
+
   // TODO: there has to be a better way...
   const [lastSwipe, setLastSwipe] = useState<number | null>(null);
   const [width, setWidth] = useState<number>(0);
@@ -67,22 +68,30 @@ const Swiper = ({
     );
   };
 
-  const previous = () => {
+  const goToPrevious = () => {
+    if (!canGoToPrevious()) {
+      return;
+    }
+
     const computedWide = computeItemWidth();
 
     const steps = currentIndex === 0 ? computedWide : 1;
     const prev = (items.length + currentIndex - steps) % items.length;
 
-    setCurrentIndex(canGoToPrevious() ? prev : currentIndex);
+    setCurrentIndex(prev);
   };
 
-  const next = () => {
+  const goToNext = () => {
+    if (!canGoToNext()) {
+      return;
+    }
+
     const computedWide = computeItemWidth();
 
     const steps = items.length - currentIndex > computedWide ? 1 : computedWide;
     const next = (items.length + currentIndex + steps) % items.length;
 
-    setCurrentIndex(canGoToNext() ? next : currentIndex);
+    setCurrentIndex(next);
   };
 
   const resetSwipe = () => {
@@ -108,12 +117,14 @@ const Swiper = ({
 
     if (draggedPercent < -0.3333) {
       resetSwipe();
-      next();
+      goToPrevious();
+      return;
     }
 
     if (draggedPercent > 0.3333) {
       resetSwipe();
-      previous();
+      goToNext();
+      return;
     }
   };
 
@@ -121,8 +132,9 @@ const Swiper = ({
     setSlideOffset(0);
   };
 
-  const onResize = (width: number) => {
-    setWidth(width);
+  const onResize = (w: number) => {
+    setWidth(w);
+    resetSwipe();
   };
 
   const swipeConfig: SwipeableOptions = {
@@ -130,40 +142,27 @@ const Swiper = ({
     trackMouse: true,
   };
 
-  // const hideArrows = false;
-  // const hideArrows = items.length <= itemsWide;
-
-  console.log('v2');
+  const hideArrows = items.length <= itemsWide;
 
   return (
     <ReactResizeDetector handleWidth onResize={onResize}>
       <SwiperWrapper style={style} media={computeMedia()}>
-        {/* {!hideArrows && (
+        {!hideArrows && (
           <ArrowLeft
             data-testid="prev"
             faded={!canGoToPrevious()}
-            onClick={previous}
+            onClick={goToPrevious}
             className={arrowClassName}
             style={arrowStyle}
           >
-            ◀abc
+            ◀
           </ArrowLeft>
-        )} */}
-        <ArrowLeft
-          data-testid="prev"
-          faded={!canGoToPrevious()}
-          onClick={previous}
-          className={arrowClassName}
-          style={arrowStyle}
-        >
-          ◀abc
-        </ArrowLeft>
+        )}
         <Swipeable
           onSwiping={eventData => onSwiping(eventData)}
           onSwiped={onSwipeEnd}
           {...swipeConfig}
         >
-          defs
           <SwiperCanvas className={canvasClassName} style={canvasStyle}>
             {items.map((item, i) => (
               <Item
@@ -172,7 +171,7 @@ const Swiper = ({
                 currentIndex={currentIndex}
                 data-testid="item"
                 style={{
-                  left: `-${(currentIndex * 100) / computeItemWidth() -
+                  left: `-${(currentIndex * 100) / computeItemWidth() +
                     slideOffset}%`,
                 }}
               >
@@ -181,26 +180,17 @@ const Swiper = ({
             ))}
           </SwiperCanvas>
         </Swipeable>
-        {/* {!hideArrows && (
+        {!hideArrows && (
           <ArrowRight
             data-testid="next"
             faded={!canGoToNext()}
-            onClick={next}
+            onClick={goToNext}
             className={arrowClassName}
             style={arrowStyle}
           >
             ▶
           </ArrowRight>
-        )} */}
-        <ArrowRight
-          data-testid="next"
-          faded={!canGoToNext()}
-          onClick={next}
-          className={arrowClassName}
-          style={arrowStyle}
-        >
-          ▶
-        </ArrowRight>
+        )}
       </SwiperWrapper>
     </ReactResizeDetector>
   );

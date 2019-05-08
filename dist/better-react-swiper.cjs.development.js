@@ -150,17 +150,23 @@ const Swiper = ({
       currentIndex < items.length - computedWide
     );
   };
-  const previous = () => {
+  const goToPrevious = () => {
+    if (!canGoToPrevious()) {
+      return;
+    }
     const computedWide = computeItemWidth();
     const steps = currentIndex === 0 ? computedWide : 1;
     const prev = (items.length + currentIndex - steps) % items.length;
-    setCurrentIndex(canGoToPrevious() ? prev : currentIndex);
+    setCurrentIndex(prev);
   };
-  const next = () => {
+  const goToNext = () => {
+    if (!canGoToNext()) {
+      return;
+    }
     const computedWide = computeItemWidth();
     const steps = items.length - currentIndex > computedWide ? 1 : computedWide;
     const next = (items.length + currentIndex + steps) % items.length;
-    setCurrentIndex(canGoToNext() ? next : currentIndex);
+    setCurrentIndex(next);
   };
   const resetSwipe = () => {
     const now = new Date().getTime();
@@ -179,43 +185,45 @@ const Swiper = ({
     setSlideOffset(draggedPercent * 100);
     if (draggedPercent < -0.3333) {
       resetSwipe();
-      next();
+      goToPrevious();
+      return;
     }
     if (draggedPercent > 0.3333) {
       resetSwipe();
-      previous();
+      goToNext();
+      return;
     }
   };
   const onSwipeEnd = () => {
     setSlideOffset(0);
   };
-  const onResize = width => {
-    setWidth(width);
+  const onResize = w => {
+    setWidth(w);
+    resetSwipe();
   };
   const swipeConfig = {
     trackTouch: true,
     trackMouse: true,
   };
-  // const hideArrows = false;
-  // const hideArrows = items.length <= itemsWide;
-  console.log('v2');
+  const hideArrows = items.length <= itemsWide;
   return React__default.createElement(
     ReactResizeDetector,
     { handleWidth: true, onResize: onResize },
     React__default.createElement(
       SwiperWrapper,
       { style: style, media: computeMedia() },
-      React__default.createElement(
-        ArrowLeft,
-        {
-          'data-testid': 'prev',
-          faded: !canGoToPrevious(),
-          onClick: previous,
-          className: arrowClassName,
-          style: arrowStyle,
-        },
-        '\u25C0abc'
-      ),
+      !hideArrows &&
+        React__default.createElement(
+          ArrowLeft,
+          {
+            'data-testid': 'prev',
+            faded: !canGoToPrevious(),
+            onClick: goToPrevious,
+            className: arrowClassName,
+            style: arrowStyle,
+          },
+          '\u25C0'
+        ),
       React__default.createElement(
         reactSwipeable.Swipeable,
         Object.assign(
@@ -225,7 +233,6 @@ const Swiper = ({
           },
           swipeConfig
         ),
-        'defs',
         React__default.createElement(
           SwiperCanvas,
           { className: canvasClassName, style: canvasStyle },
@@ -238,7 +245,7 @@ const Swiper = ({
                 currentIndex: currentIndex,
                 'data-testid': 'item',
                 style: {
-                  left: `-${(currentIndex * 100) / computeItemWidth() -
+                  left: `-${(currentIndex * 100) / computeItemWidth() +
                     slideOffset}%`,
                 },
               },
@@ -247,20 +254,22 @@ const Swiper = ({
           )
         )
       ),
-      React__default.createElement(
-        ArrowRight,
-        {
-          'data-testid': 'next',
-          faded: !canGoToNext(),
-          onClick: next,
-          className: arrowClassName,
-          style: arrowStyle,
-        },
-        '\u25B6'
-      )
+      !hideArrows &&
+        React__default.createElement(
+          ArrowRight,
+          {
+            'data-testid': 'next',
+            faded: !canGoToNext(),
+            onClick: goToNext,
+            className: arrowClassName,
+            style: arrowStyle,
+          },
+          '\u25B6'
+        )
     )
   );
 };
 
+exports.Swiper = Swiper;
 exports.default = Swiper;
 //# sourceMappingURL=better-react-swiper.cjs.development.js.map

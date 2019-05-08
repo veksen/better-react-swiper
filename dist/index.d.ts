@@ -9,7 +9,7 @@ interface SwiperProps {
   arrowStyle?: React.CSSProperties;
   style?: React.CSSProperties;
 }
-declare const Swiper: ({
+export declare const Swiper: ({
   items,
   itemsWide,
   infinity,
