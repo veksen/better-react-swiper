@@ -13,7 +13,7 @@ yarn add better-react-swiper
 
 ```js
 // import from NPM
-import Swiper from 'better-react-swiper';
+import { Swiper } from 'better-react-swiper';
 ```
 
 ```jsx
