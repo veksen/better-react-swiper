@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 import { EventData, Swipeable, SwipeableOptions } from 'react-swipeable';
+import { Arrow } from './arrow';
 
 import {
   ArrowLeft,
@@ -155,7 +156,7 @@ export const Swiper = ({
             className={arrowClassName}
             style={arrowStyle}
           >
-            ◀
+            <Arrow />
           </ArrowLeft>
         )}
         <Swipeable
@@ -188,7 +189,7 @@ export const Swiper = ({
             className={arrowClassName}
             style={arrowStyle}
           >
-            ▶
+            <Arrow />
           </ArrowRight>
         )}
       </SwiperWrapper>
