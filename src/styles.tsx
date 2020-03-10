@@ -43,12 +43,23 @@ const arrowStyles = css`
   margin-top: -15px;
   z-index: 1;
   transition: 0.3s opacity;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & svg {
+    width: 13px;
+  }
 `;
 
 export const ArrowLeft = styled.button<{ faded: boolean }>`
   ${arrowStyles};
   opacity: ${props => (props.faded ? 0.25 : 1)};
   left: 10px;
+
+  svg {
+    transform: scale(-1);
+  }
 `;
 
 export const ArrowRight = styled.button<{ faded: boolean }>`
