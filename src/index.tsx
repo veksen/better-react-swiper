@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 import { EventData, Swipeable, SwipeableOptions } from 'react-swipeable';
 
@@ -34,12 +34,12 @@ export const Swiper = ({
   arrowStyle,
   style,
 }: SwiperProps): JSX.Element => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [slideOffset, setSlideOffset] = useState<number>(0);
+  const [currentIndex, setCurrentIndex] = React.useState<number>(0);
+  const [slideOffset, setSlideOffset] = React.useState<number>(0);
 
   // TODO: there has to be a better way...
-  const [lastSwipe, setLastSwipe] = useState<number | null>(null);
-  const [width, setWidth] = useState<number>(0);
+  const [lastSwipe, setLastSwipe] = React.useState<number | null>(null);
+  const [width, setWidth] = React.useState<number>(0);
 
   const computeMedia = () => {
     if (width <= MEDIA_MAX_XS) {
