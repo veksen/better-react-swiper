@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "react-resize-detector": "^4.2.1",
-    "react-swipeable": "^5.2.1",
+    "react-swipeable": "^5.5.1",
     "styled-components": "^4.2.0"
   },
   "devDependencies": {
