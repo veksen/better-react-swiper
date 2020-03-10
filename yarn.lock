@@ -6097,7 +6097,7 @@ tslint-eslint-rules@^5.4.0:
     tslib "1.9.0"
     tsutils "^3.0.0"
 
-tslint-react-hooks@^2.1.0:
+tslint-react-hooks@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/tslint-react-hooks/-/tslint-react-hooks-2.2.1.tgz#c52c7df65ee1517b2d6c92bc716e9ef72ccdf208"
   integrity sha512-bqIg2uZe+quJMfSOGc4OOZ4awo6TP1ejGDGS6IKg2WIrS0XnWfhUJ99i3B8rUpnZhuD4vRSvyYIbXPUmEqQxxQ==
