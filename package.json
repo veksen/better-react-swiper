@@ -14,13 +14,13 @@
     "dist"
   ],
   "main": "dist/index.js",
-  "umd:main": "dist/better-react-swiper-2.umd.production.js",
-  "module": "dist/better-react-swiper-2.es.production.js",
+  "umd:main": "dist/better-react-swiper.umd.production.js",
+  "module": "dist/better-react-swiper.es.production.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "build": "tsdx build",
     "start": "tsdx watch",
-    "test": "tsdx test --env=jsdom",
+    "test": "tsdx test --passWithNoTests",
     "test:check-coverage": "yarn test --coverage && codecov",
     "preversion": "yarn build --production",
     "postversion": "git push && git push --tags"
@@ -42,25 +42,25 @@
     "styled-components": "^4.2.0"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.12",
-    "@types/react": "^16.8.17",
-    "@types/react-dom": "^16.8.4",
+    "@types/jest": "^25.1.4",
+    "@types/react": "^16.9.23",
+    "@types/react-dom": "^16.9.5",
     "@types/react-resize-detector": "^4.0.1",
     "@types/react-swipeable": "^4.3.0",
     "@types/styled-components": "^4.1.14",
-    "husky": "^2.2.0",
+    "husky": "^4.2.3",
     "prettier": "^1.17.0",
     "pretty-quick": "^1.10.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
     "react-testing-library": "^7.0.0",
-    "tsdx": "^0.5.7",
-    "tslib": "^1.9.3",
+    "tsdx": "^0.12.3",
+    "tslib": "^1.11.1",
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-react-hooks": "^2.1.0",
-    "typescript": "^3.4.5"
+    "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": ">=16",
