@@ -4,12 +4,15 @@
   "description": "Lightweight and simple React swiper component",
   "repository": {
     "type": "git",
-    "url": "https://github.com/veksen/better-react-swiper.git"
+    "url": "https://github.com/atefBB/better-react-swiper.git"
   },
-  "author": {
+  "author": [{
     "name": "Jean-Philippe Sirois",
     "email": "jp@veksen.net"
-  },
+  }, {
+    "name": "Atef Ben Ali",
+    "email": "atef.bettaib@gmail.com"
+  }],
   "files": [
     "dist"
   ],
