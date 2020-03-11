@@ -1,7 +1,7 @@
 import * as React from 'react';
 import 'react-app-polyfill/ie11';
 import * as ReactDOM from 'react-dom';
-import { Swiper } from '../.';
+import Swiper from '../.';
 
 function Card(props) {
   return (

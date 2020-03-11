@@ -61,6 +61,8 @@ https://codesandbox.io/s/mz0yp0ll5p
 
 ```jsx
 // example
+import Swiper from 'better-react-swiper';
+
 const Item = ({children}) => <div style={{ margin: '0 10px' }}>{children}</div>
 const items = [1,2,3,4,5].map(number => <Item>{number}</Item>)
 

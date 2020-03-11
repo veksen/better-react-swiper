@@ -25,7 +25,7 @@ interface SwiperProps {
   style?: React.CSSProperties;
 }
 
-export const Swiper = ({
+const Swiper = ({
   items = [],
   itemsWide = 3,
   infinity = false,
