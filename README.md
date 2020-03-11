@@ -44,7 +44,7 @@ import Swiper from 'better-react-swiper';
 
 ### Demo
 
-https://codesandbox.io/s/mz0yp0ll5p
+https://codesandbox.io/s/better-react-swiper-8g03n
 
 ### Options
 
