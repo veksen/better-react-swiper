@@ -155,7 +155,7 @@ export const Swiper = ({
             className={arrowClassName}
             style={arrowStyle}
           >
-            ◀
+            <svg viewBox="0 0 18 18" role="img" aria-label="Prev" focusable="false" style="height: 10px; width: 10px; fill: currentcolor;"><path d="m13.7 16.29a1 1 0 1 1 -1.42 1.41l-8-8a1 1 0 0 1 0-1.41l8-8a1 1 0 1 1 1.42 1.41l-7.29 7.29z" fill-rule="evenodd"></path></svg>
           </ArrowLeft>
         )}
         <Swipeable
@@ -188,7 +188,7 @@ export const Swiper = ({
             className={arrowClassName}
             style={arrowStyle}
           >
-            ▶
+            <svg viewBox="0 0 18 18" role="img" aria-label="Next" focusable="false" style="height: 10px; width: 10px; fill: currentcolor;"><path d="m4.29 1.71a1 1 0 1 1 1.42-1.41l8 8a1 1 0 0 1 0 1.41l-8 8a1 1 0 1 1 -1.42-1.41l7.29-7.29z" fill-rule="evenodd"></path></svg>
           </ArrowRight>
         )}
       </SwiperWrapper>
