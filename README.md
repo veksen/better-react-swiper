@@ -1,6 +1,6 @@
-[![TravisCI](https://travis-ci.org/veksen/better-react-swiper.svg?branch=master)](https://travis-ci.org/veksen/better-react-swiper)
-[![codecov](https://codecov.io/gh/veksen/better-react-swiper/branch/master/graph/badge.svg)](https://codecov.io/gh/veksen/better-react-swiper)
-[![gzip size](http://img.badgesize.io/https://unpkg.com/better-react-swiper@latest/dist/better-react-swiper.umd.production.js?compression=gzip)](https://unpkg.com/better-react-swiper@latest/dist/better-react-swiper.umd.production.js)
+[![TravisCI](https://img.shields.io/travis/veksen/better-react-swiper?style=for-the-badge)](https://travis-ci.org/veksen/better-react-swiper)
+[![Codecov](https://img.shields.io/codecov/c/github/veksen/better-react-swiper?style=for-the-badge&logo=codecov)](https://codecov.io/gh/veksen/better-react-swiper)
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/better-react-swiper?style=for-the-badge)](https://unpkg.com/better-react-swiper@latest/dist/better-react-swiper.umd.production.js)
 
 ### Usage
 
