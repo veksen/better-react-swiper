@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
-import { EventData, Swipeable, SwipeableOptions } from 'react-swipeable';
+import { useSwipeable, EventData, SwipeableOptions } from 'react-swipeable';
 import { Arrow } from './arrow';
 
 import {
@@ -41,6 +41,19 @@ const Swiper = ({
   // TODO: there has to be a better way...
   const [lastSwipe, setLastSwipe] = React.useState<number | null>(null);
   const [width, setWidth] = React.useState<number>(0);
+
+  const swipeConfig: SwipeableOptions = {
+    trackTouch: true,
+    trackMouse: true,
+  };
+
+  const swipeHandlers = useSwipeable({
+    onSwiping: eventData => onSwiping(eventData),
+    onSwiped: () => {
+      setSlideOffset(0);
+    },
+    ...swipeConfig,
+  });
 
   const computeMedia = () => {
     if (width <= MEDIA_MAX_XS) {
@@ -129,18 +142,9 @@ const Swiper = ({
     }
   };
 
-  const onSwipeEnd = () => {
-    setSlideOffset(0);
-  };
-
   const onResize = (w: number) => {
     setWidth(w);
     resetSwipe();
-  };
-
-  const swipeConfig: SwipeableOptions = {
-    trackTouch: true,
-    trackMouse: true,
   };
 
   const hideArrows = items.length <= itemsWide;
@@ -159,28 +163,26 @@ const Swiper = ({
             <Arrow />
           </ArrowLeft>
         )}
-        <Swipeable
-          onSwiping={eventData => onSwiping(eventData)}
-          onSwiped={onSwipeEnd}
-          {...swipeConfig}
+        <SwiperCanvas
+          {...swipeHandlers}
+          className={canvasClassName}
+          style={canvasStyle}
         >
-          <SwiperCanvas className={canvasClassName} style={canvasStyle}>
-            {items.map((item, i) => (
-              <Item
-                key={i}
-                itemsWide={computeItemWidth()}
-                currentIndex={currentIndex}
-                data-testid="item"
-                style={{
-                  left: `-${(currentIndex * 100) / computeItemWidth() +
-                    slideOffset}%`,
-                }}
-              >
-                {item}
-              </Item>
-            ))}
-          </SwiperCanvas>
-        </Swipeable>
+          {items.map((item, i) => (
+            <Item
+              key={i}
+              itemsWide={computeItemWidth()}
+              currentIndex={currentIndex}
+              data-testid="item"
+              style={{
+                left: `-${(currentIndex * 100) / computeItemWidth() +
+                  slideOffset}%`,
+              }}
+            >
+              {item}
+            </Item>
+          ))}
+        </SwiperCanvas>
         {!hideArrows && (
           <ArrowRight
             data-testid="next"
