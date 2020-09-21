@@ -33,7 +33,7 @@ const arrowStyles = css`
   background: #fff;
   border: 0;
   color: ${color.blue};
-  border-radius: 4px;
+  border-radius: 50%;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
   font-size: 12px;
   width: 30px;
