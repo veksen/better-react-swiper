@@ -142,8 +142,10 @@ const Swiper = ({
     }
   };
 
-  const onResize = (w: number) => {
-    setWidth(w);
+  const onResize = (w?: number) => {
+    if (w) {
+      setWidth(w);
+    }
     resetSwipe();
   };
 
