@@ -8,13 +8,13 @@
     "start": "parcel index.html"
   },
   "dependencies": {
-    "react-app-polyfill": "^1.0.6"
+    "react-app-polyfill": "^3.0.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.23",
-    "@types/react-dom": "^16.9.5",
-    "parcel": "^1.12.4",
-    "typescript": "^3.8.3"
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "parcel": "^2.4.1",
+    "typescript": "^4.6.3"
   },
   "alias": {
     "react": "../node_modules/react",
