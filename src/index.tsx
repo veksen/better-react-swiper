@@ -30,10 +30,6 @@ const Swiper = ({
   style,
 }: SwiperProps): JSX.Element => {
   const [currentIndex, setCurrentIndex] = React.useState<number>(0);
-  const [slideOffset, setSlideOffset] = React.useState<number>(0);
-
-  // TODO: there has to be a better way...
-  const [lastSwipe, setLastSwipe] = React.useState<number | null>(null);
   const [width, setWidth] = React.useState<number>(0);
 
   const swipeConfig: SwipeableOptions = {
@@ -43,9 +39,6 @@ const Swiper = ({
 
   const swipeHandlers = useSwipeable({
     onSwiping: (eventData) => onSwiping(eventData),
-    onSwiped: () => {
-      setSlideOffset(0);
-    },
     ...swipeConfig,
   });
 
@@ -99,35 +92,19 @@ const Swiper = ({
     setCurrentIndex(next);
   };
 
-  const resetSwipe = () => {
-    const now = new Date().getTime();
-    setSlideOffset(0);
-    setLastSwipe(now);
-  };
-
   const onSwiping = (e: EventData) => {
-    const now = new Date().getTime();
-
     if (!width) {
-      return;
-    }
-
-    if (lastSwipe && now - lastSwipe < 250) {
       return;
     }
 
     const draggedPercent = (e.deltaX * 2) / width;
 
-    setSlideOffset(draggedPercent * 100);
-
     if (draggedPercent < -0.3333) {
-      resetSwipe();
       goToPrevious();
       return;
     }
 
     if (draggedPercent > 0.3333) {
-      resetSwipe();
       goToNext();
       return;
     }
@@ -137,7 +114,6 @@ const Swiper = ({
     if (w) {
       setWidth(w);
     }
-    resetSwipe();
   };
 
   const hideArrows = items.length <= itemsWide;
@@ -163,9 +139,6 @@ const Swiper = ({
               itemsWide={computeItemWidth()}
               currentIndex={currentIndex}
               data-testid="item"
-              style={{
-                left: `-${(currentIndex * 100) / computeItemWidth() + slideOffset}%`,
-              }}
             >
               {item}
             </Item>

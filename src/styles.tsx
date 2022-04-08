@@ -9,7 +9,9 @@ const color = {
 };
 
 export const SwiperCanvas = styled.div`
+  scroll-snap-type: x mandatory;
   box-sizing: content-box;
+  scroll-padding: 0 60px;
   display: flex;
   flex-wrap: nowrap;
   width: calc(100% - 120px);
@@ -24,7 +26,15 @@ export const SwiperCanvas = styled.div`
     color-stop(0.95, rgba(0, 0, 0, 1)),
     color-stop(1, rgba(0, 0, 0, 0))
   );
-  overflow: hidden;
+  overflow-x: scroll;
+
+  /* hide scrollbars */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
 `;
 
 const arrowStyles = css`
@@ -72,6 +82,7 @@ export const Item = styled.div<{
   currentIndex: number;
   itemsWide: number;
 }>`
+  scroll-snap-align: start;
   transition: 0.3s left;
   position: relative;
   width: ${props => 100 / props.itemsWide}%;
