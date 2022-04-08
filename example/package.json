@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "parcel build index.html",
+    "prestart": "rm -r .parcel-cache",
     "start": "parcel index.html"
   },
   "dependencies": {
