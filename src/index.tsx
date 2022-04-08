@@ -3,13 +3,7 @@ import ReactResizeDetector from 'react-resize-detector';
 import { useSwipeable, EventData, SwipeableOptions } from 'react-swipeable';
 import { Arrow } from './arrow';
 
-import {
-  ArrowLeft,
-  ArrowRight,
-  Item,
-  SwiperCanvas,
-  SwiperWrapper,
-} from './styles';
+import { ArrowLeft, ArrowRight, Item, SwiperCanvas, SwiperWrapper } from './styles';
 
 const MEDIA_MAX_XS = 576;
 const MEDIA_MAX_SM = 767;
@@ -48,7 +42,7 @@ const Swiper = ({
   };
 
   const swipeHandlers = useSwipeable({
-    onSwiping: eventData => onSwiping(eventData),
+    onSwiping: (eventData) => onSwiping(eventData),
     onSwiped: () => {
       setSlideOffset(0);
     },
@@ -76,10 +70,7 @@ const Swiper = ({
   const canGoToNext = () => {
     const computedWide = computeItemWidth();
 
-    return (
-      (infinity && items.length > 1) ||
-      currentIndex < items.length - computedWide
-    );
+    return (infinity && items.length > 1) || currentIndex < items.length - computedWide;
   };
 
   const goToPrevious = () => {
@@ -165,11 +156,7 @@ const Swiper = ({
             <Arrow />
           </ArrowLeft>
         )}
-        <SwiperCanvas
-          {...swipeHandlers}
-          className={canvasClassName}
-          style={canvasStyle}
-        >
+        <SwiperCanvas {...swipeHandlers} className={canvasClassName} style={canvasStyle}>
           {items.map((item, i) => (
             <Item
               key={i}
@@ -177,8 +164,7 @@ const Swiper = ({
               currentIndex={currentIndex}
               data-testid="item"
               style={{
-                left: `-${(currentIndex * 100) / computeItemWidth() +
-                  slideOffset}%`,
+                left: `-${(currentIndex * 100) / computeItemWidth() + slideOffset}%`,
               }}
             >
               {item}
