@@ -64,7 +64,7 @@ const arrowStyles = css`
 
 export const ArrowLeft = styled.button<{ faded: boolean }>`
   ${arrowStyles};
-  opacity: ${props => (props.faded ? 0.25 : 1)};
+  opacity: ${(props) => (props.faded ? 0.25 : 1)};
   left: 10px;
 
   svg {
@@ -74,7 +74,7 @@ export const ArrowLeft = styled.button<{ faded: boolean }>`
 
 export const ArrowRight = styled.button<{ faded: boolean }>`
   ${arrowStyles};
-  opacity: ${props => (props.faded ? 0.25 : 1)};
+  opacity: ${(props) => (props.faded ? 0.25 : 1)};
   right: 10px;
 `;
 
@@ -85,8 +85,8 @@ export const Item = styled.div<{
   scroll-snap-align: start;
   transition: 0.3s left;
   position: relative;
-  width: ${props => 100 / props.itemsWide}%;
-  flex: 0 0 ${props => 100 / props.itemsWide}%;
+  width: ${(props) => 100 / props.itemsWide}%;
+  flex: 0 0 ${(props) => 100 / props.itemsWide}%;
   display: flex;
 `;
 
@@ -94,7 +94,7 @@ export const SwiperWrapper = styled.div<{ media: 'xs' | 'sm' | 'md' }>`
   position: relative;
 
   ${SwiperCanvas} {
-    ${props =>
+    ${(props) =>
       isMobile(props.media)
         ? css`
             width: calc(100% - 80px);
@@ -104,7 +104,7 @@ export const SwiperWrapper = styled.div<{ media: 'xs' | 'sm' | 'md' }>`
   }
 
   ${ArrowLeft} {
-    ${props =>
+    ${(props) =>
       isMobile(props.media)
         ? css`
             left: 5px;
@@ -113,7 +113,7 @@ export const SwiperWrapper = styled.div<{ media: 'xs' | 'sm' | 'md' }>`
   }
 
   ${ArrowRight} {
-    ${props =>
+    ${(props) =>
       isMobile(props.media)
         ? css`
             right: 5px;
@@ -122,7 +122,7 @@ export const SwiperWrapper = styled.div<{ media: 'xs' | 'sm' | 'md' }>`
   }
 
   ${Item} {
-    ${props =>
+    ${(props) =>
       isMobile(props.media)
         ? css`
             width: 100%;
