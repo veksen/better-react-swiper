@@ -16,6 +16,7 @@ interface SwiperProps {
   canvasStyle?: React.CSSProperties;
   arrowClassName?: string;
   arrowStyle?: React.CSSProperties;
+  autoplay?: number;
   style?: React.CSSProperties;
 }
 
@@ -27,6 +28,7 @@ const Swiper = ({
   canvasStyle,
   arrowClassName,
   arrowStyle,
+  autoplay = 0,
   style,
 }: SwiperProps): JSX.Element => {
   const [currentIndex, setCurrentIndex] = React.useState<number>(0);
@@ -115,6 +117,20 @@ const Swiper = ({
       setWidth(w);
     }
   };
+
+  const startAutoPlay = () => {
+
+    if(autoplay > 0){
+      setInterval(() => {
+        goToNext();
+      }, autoplay);
+    }
+
+  }
+
+  React.useEffect(() => {
+    startAutoPlay();
+  }, []);
 
   const hideArrows = items.length <= itemsWide;
 
